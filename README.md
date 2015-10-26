@@ -1,7 +1,6 @@
-|           | Master | Review | | |
-|-----------|--------|--------|-|-|
-| **Tests** | [![Build Status](https://magnum.travis-ci.com/a-random-oracle/flippd.svg?token=b4UG65sf5DLKDqBqGHqz&branch=master)](https://magnum.travis-ci.com/a-random-oracle/flippd) | [![Build Status](https://magnum.travis-ci.com/a-random-oracle/flippd.svg?token=b4UG65sf5DLKDqBqGHqz&branch=review)](https://magnum.travis-ci.com/a-random-oracle/flippd) | | |
-
+|           | Master | Review |
+|-----------|--------|--------|
+| **Tests** | [![Build Status](https://magnum.travis-ci.com/a-random-oracle/flippd.svg?token=b4UG65sf5DLKDqBqGHqz&branch=master)](https://magnum.travis-ci.com/a-random-oracle/flippd) | [![Build Status](https://magnum.travis-ci.com/a-random-oracle/flippd.svg?token=b4UG65sf5DLKDqBqGHqz&branch=review)](https://magnum.travis-ci.com/a-random-oracle/flippd) |
 
 # Flippd
 
