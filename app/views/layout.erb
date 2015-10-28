@@ -41,6 +41,8 @@
                   <%=@user[:name]%> <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
+                 <li><a><%=@user[:email]%></a></li>
+                 <li><a><%=@user[:group]%> (<%=@user[:level]%>)</a></li>
                  <li><a href="/auth/destroy">Sign Out</a></li>
                </ul>
               </li>
