@@ -5,8 +5,8 @@ require 'omniauth'
 class Flippd < Sinatra::Application
   before do
     # Load in the configuration (at the URL in the project's .env file)
-    @users = JSON.load(open(ENV['CONFIG_URL'] + "users.json"))
-    @groups = JSON.load(open(ENV['CONFIG_URL'] + "groups.json"))
+    @users = JSON.load(open(ENV['CONFIG_URL'] + "users.json")) rescue {}
+    @groups = JSON.load(open(ENV['CONFIG_URL'] + "groups.json")) rescue {}
   end
 
   if ENV['AUTH'] == "GOOGLE"
