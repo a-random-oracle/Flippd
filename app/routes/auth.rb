@@ -1,6 +1,14 @@
+require 'open-uri'
+require 'json'
 require 'omniauth'
 
 class Flippd < Sinatra::Application
+  before do
+    # Load in the configuration (at the URL in the project's .env file)
+    @users = JSON.load(open(ENV['CONFIG_URL'] + "users.json")) rescue {}
+    @groups = JSON.load(open(ENV['CONFIG_URL'] + "groups.json")) rescue {}
+  end
+
   if ENV['AUTH'] == "GOOGLE"
     require 'omniauth-google-oauth2'
     use OmniAuth::Strategies::GoogleOauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET']
@@ -11,14 +19,23 @@ class Flippd < Sinatra::Application
   end
 
   before do
-    @user = nil
-    @user = User.get(session[:user_id]) if session.key?(:user_id)
+    @user = session[:user]
   end
 
   route :get, :post, '/auth/:provider/callback' do
     auth_hash = env['omniauth.auth']
-    user = User.first_or_create({ email: auth_hash.info.email }, { name: auth_hash.info.name} )
-    session[:user_id] = user.id
+
+    email = auth_hash.info.email
+    group = @users.keys.find{|k| @users[k].include?(email)} || "guest"
+    level = @groups[group] || 0
+
+    session[:user] = {
+      name: auth_hash.info.name,
+      id: auth_hash.uid,
+      email: email,
+      group: group,
+      level: level
+    }
 
     origin = env['omniauth.origin'] || '/'
     redirect to(origin)
@@ -31,7 +48,7 @@ class Flippd < Sinatra::Application
   end
 
   get '/auth/destroy' do
-    session.delete(:user_id)
+    session.delete(:user)
     origin = env["HTTP_REFERER"] || '/'
     redirect to(origin)
   end
