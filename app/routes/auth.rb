@@ -19,8 +19,7 @@ class Flippd < Sinatra::Application
   end
 
   before do
-    @user = nil
-    @user = User.get(session[:user_id]) if session.key?(:user_id)
+    @user = session[:user]
   end
 
   route :get, :post, '/auth/:provider/callback' do
@@ -49,7 +48,7 @@ class Flippd < Sinatra::Application
   end
 
   get '/auth/destroy' do
-    session.delete(:user_id)
+    session.delete(:user)
     origin = env["HTTP_REFERER"] || '/'
     redirect to(origin)
   end
