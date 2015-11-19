@@ -162,6 +162,7 @@ DEPENDENCIES
   data_mapper (~> 1.2.0)
   database_cleaner (~> 1.5.1)
   dm-mysql-adapter (~> 1.2.0)
+  dm-types (~> 1.2, >= 1.2.2)
   dotenv (~> 2.0.2)
   foreman (~> 0.78.0)
   omniauth (~> 1.2.2)
