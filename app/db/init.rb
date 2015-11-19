@@ -12,5 +12,7 @@ models_directory = File.dirname(__FILE__) + "/../models/"
 model_files = Dir[models_directory + "*.rb"]
 model_files.each { |f| require f }
 
+DataMapper::Model.raise_on_save_failure = true
+
 DataMapper.finalize
 DataMapper.auto_upgrade!
