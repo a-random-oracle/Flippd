@@ -28,6 +28,14 @@
   <div id="player"></div>
 </div>
 
+<div id="appreciate-button">
+  <form method="post" action="/like">
+    <input type='hidden' name='id' value='<%=@video["id"]%>'>
+    <input type='submit' value='Like'>
+  </form>
+  <p><%=Like.all('video_id' => @video["id"]).count%></p>
+</div>
+
 <% if @video["resources"] %>
 <div id="resources" class="row" style="margin-top: 1.5em;">
   <div class="col-xs-6 col-md-6">
