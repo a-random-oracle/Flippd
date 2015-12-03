@@ -6,7 +6,6 @@ class Flippd < Sinatra::Application
   before do
     # Load in the configuration (at the URL in the project's .env file)
     @users = JSON.load(open(ENV['CONFIG_URL'] + "users.json")) rescue {}
-    @permissions = JSON.load(open(ENV['CONFIG_URL'] + "permissions.json")) rescue {}
   end
 
   if ENV['AUTH'] == "GOOGLE"
@@ -26,14 +25,13 @@ class Flippd < Sinatra::Application
     auth_hash = env['omniauth.auth']
 
     email = auth_hash.info.email
-    group = @users.keys.find{|k| @users[k].include?(email)} || "guest"
-    permissions = @permissions[group] || []
+    group = (@users.keys.find{|k| @users[k].include?(email)} || "guest").to_sym
 
     session[:user] = {
       name: auth_hash.info.name,
       id: auth_hash.uid,
       email: email,
-      permissions: permissions
+      group: group
     }
 
     origin = env['omniauth.origin'] || '/'
