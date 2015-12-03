@@ -75,8 +75,7 @@ class Flippd < Sinatra::Application
   end
 
   post '/like' do
-    # Only permit authenticated users to like videos
-    unless @user.nil?
+    if @user.respond_to? :has_permission? and @user.has_permission? :like_video
       # Assuming they haven't liked the video before, add a new like record
       Like.first_or_create({video_id: params['id'], user_id: @user['email']})
     end
