@@ -11,6 +11,7 @@ gem "data_mapper", "~> 1.2.0"
 gem 'dm-types', '~> 1.2', '>= 1.2.2'
 gem "dm-mysql-adapter", "~> 1.2.0"
 gem "dotenv", "~> 2.0.2"
+gem 'pundit', '~> 1.0', '>= 1.0.1'
 
 group :development do
   gem "rake", "~> 10.4.2"
