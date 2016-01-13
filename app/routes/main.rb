@@ -73,4 +73,14 @@ class Flippd < Sinatra::Application
     pass unless @video
     erb :video
   end
+  
+  post '/like' do
+    like = Like.new(:video_id => params['id'], :user_id => @user['email'])
+    
+    authorize like, :create? do
+      like.save
+    end
+    
+    redirect '/videos/' + params['id']
+  end
 end
