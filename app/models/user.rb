@@ -8,8 +8,8 @@ class User
   property :email, String, required: true, length: 150
   property :permissions, Json, required: false, default: [], lazy: false
 
-  def is_guest?
-    false
+  def is_logged_in?
+    true
   end
 
   def has_permission?(permission)
@@ -24,8 +24,8 @@ class GuestUser
     nil
   end
 
-  def is_guest?
-    true
+  def is_logged_in?
+    false
   end
 
   def has_permission?(permission)
