@@ -16,9 +16,9 @@ class Flippd < Sinatra::Application
     @users = JSON.load(open(ENV['CONFIG_URL'] + "users.json")) rescue {}
     @permissions = JSON.load(open(ENV['CONFIG_URL'] + "permissions.json")) rescue {}
 
-    @user = GuestUser.instance
+    @user = AnonUser.instance
     if session.key?(:user_id) then
-      @user = User.get(session[:user_id]) || GuestUser.instance
+      @user = User.get(session[:user_id]) || AnonUser.instance
     end
   end
 

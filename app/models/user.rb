@@ -17,7 +17,7 @@ class User
   end
 end
 
-class GuestUser
+class AnonUser
   include Singleton
 
   def self.method_missing(*args, &block)
