@@ -9,7 +9,7 @@ require 'rack-flash'
 
 class Flippd < Sinatra::Application
   register Sinatra::MultiRoute
-  use Rack::Session::Cookie, secret: ENV['COOKIE_SECRET']
+  use Rack::Session::Cookie, secret: ENV['COOKIE_SECRET'] + Time.now.strftime('%s')
   use Rack::Flash
 
   before do
