@@ -12,27 +12,15 @@ class Flippd < Sinatra::Application
   end
 
   before do
-    # Load in the configuration (at the URL in the project's .env file)
-    @users = JSON.load(open(ENV['CONFIG_URL'] + "users.json")) rescue {}
-    @permissions = JSON.load(open(ENV['CONFIG_URL'] + "permissions.json")) rescue {}
-
-    @user = nil
-    @user = User.get(session[:user_id]) if session.key?(:user_id)
+    @user = UnauthenticatedUser.instance
+    if session.key?(:user_id) then
+      @user = User.get(session[:user_id]) || UnauthenticatedUser.instance
+    end
   end
 
   route :get, :post, '/auth/:provider/callback' do
-    auth_hash = env['omniauth.auth']
-
-    email = auth_hash.info.email
-    name = auth_hash.info.name
-    group = @users.keys.find{|k| @users[k].include?(email)} || "guest"
-    permissions = @permissions[group] || []
-
-    user = User.first_or_new({ email: email }, { name: name, permissions: permissions })
-    user.name = name if user.name != name
-    user.permissions = permissions if user.permissions != permissions
-    user.save() # will short-circuit if unchanged
-
+    oauth_data = env['omniauth.auth']
+    user = User.from_oauth(oauth_data)
     session[:user_id] = user.id
 
     origin = env['omniauth.origin'] || '/'
