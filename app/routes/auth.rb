@@ -12,9 +12,9 @@ class Flippd < Sinatra::Application
   end
 
   before do
-    @user = AnonUser.instance
+    @user = UnauthenticatedUser.instance
     if session.key?(:user_id) then
-      @user = User.get(session[:user_id]) || AnonUser.instance
+      @user = User.get(session[:user_id]) || UnauthenticatedUser.instance
     end
   end
 

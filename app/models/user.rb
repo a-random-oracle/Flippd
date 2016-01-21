@@ -42,7 +42,7 @@ class User
   end
 end
 
-class AnonUser
+class UnauthenticatedUser
   include Singleton
 
   def self.method_missing(*args, &block)
