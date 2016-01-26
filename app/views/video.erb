@@ -28,6 +28,16 @@
   <div id="player"></div>
 </div>
 
+<% if @video["tags"] %>
+<div id="tags" class="row" style="margin-top: 1.5em;">
+  <div class="col-xs-6 col-md-6">
+    <% @video["tags"].each do |tag| %>
+	  <span class="label label-info"><%=tag%></span>
+    <% end %>
+  </div>
+</div>
+<% end %>
+
 <% if @video["resources"] %>
 <div id="resources" class="row" style="margin-top: 1.5em;">
   <div class="col-xs-6 col-md-6">
