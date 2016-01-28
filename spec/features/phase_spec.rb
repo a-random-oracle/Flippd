@@ -26,12 +26,19 @@ feature "A phase page" do
   end
 
   it "contains a link to every video in this phase" do
-    titles = ['Ruby', 'Ruby Gems',
-              'Planning vs. reacting', 'TDD and RSpec', 'Test doubles',
-              'Ruby Parser', 'Vagrant', 'Git']
+    titles = {
+      'Ruby' => 'fundamentals-ruby-ruby',
+      'Ruby Gems' => 'fundamentals-ruby-ruby-gems',
+      'Planning vs. reacting' => 'fundamentals-approach-planning-reacting',
+      'TDD and RSpec' => 'fundamentals-approach-tdd-rspec',
+      'Test doubles' => 'fundamentals-approach-test-doubles',
+      'Ruby Parser' => 'fundamentals-tools-ruby-parser',
+      'Vagrant' => 'fundamentals-tools-vagrant',
+      'Git' => 'fundamentals-tools-git'
+      }
 
-    titles.each_with_index do |title, index|
-      expect(page).to have_link title, href: "/videos/#{index+1}"
+    titles.each do |title, id|
+      expect(page).to have_link title, href: "/videos/#{id}"
     end
   end
 end

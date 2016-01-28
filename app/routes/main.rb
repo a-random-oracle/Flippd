@@ -19,22 +19,6 @@ class Flippd < Sinatra::Application
         end
       end
     end
-
-    # The configuration doesn't have to include identifiers, so we
-    # add an identifier to each phase and video
-    phase_id = 1
-    video_id = 1
-    @phases.each do |phase|
-      phase["id"] = phase_id
-      phase_id += 1
-
-      phase['topics'].each do |topic|
-        topic['videos'].each do |video|
-          video["id"] = video_id
-          video_id += 1
-        end
-      end
-    end
   end
 
   get '/' do
@@ -52,32 +36,29 @@ class Flippd < Sinatra::Application
   end
 
   get '/videos/:id' do
+    all_videos = []
     @phases.each do |phase|
       phase['topics'].each do |topic|
         topic['videos'].each do |video|
-          if video["id"] == params['id'].to_i
+          all_videos << video
+        end
+      end
+    end
+
+    @phases.each do |phase|
+      phase['topics'].each do |topic|
+        topic['videos'].each do |video|
+          if video["id"] == params['id']
             @phase = phase
             @video = video
-          end
-        end
-      end
-    end
 
-    @phases.each do |phase|
-      phase['topics'].each do |topic|
-        topic['videos'].each do |video|
-          if video["id"] == params['id'].to_i + 1
-            @next_video = video
-          end
-        end
-      end
-    end
+            index = nil
+            all_videos.each_with_index do |vid, ind|
+              index = ind if vid["id"] == video["id"]
+            end
 
-    @phases.each do |phase|
-      phase['topics'].each do |topic|
-        topic['videos'].each do |video|
-          if video["id"] == params['id'].to_i - 1
-            @previous_video = video
+            @next_video = all_videos[index + 1] unless index + 1 > all_videos.size
+            @previous_video = all_videos[index - 1] unless index - 1 < 0
           end
         end
       end
