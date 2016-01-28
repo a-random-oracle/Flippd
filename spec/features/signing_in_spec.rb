@@ -3,7 +3,7 @@ feature "Signing in" do
     before(:each) { sign_in }
 
     it "displays the user's name" do
-      expect(page).to have_content 'joe@bloggs.com'
+      expect(page).to have_content 'test-user@example.com'
     end
 
     it "displays a sign out link" do
@@ -17,36 +17,14 @@ feature "Signing in" do
     end
   end
 
-  context "when signing in with invalid credentials" do
-    before(:each) { fail_to_sign_in }
-
-    it "displays the error" do
-      expect(page).to have_content 'Invalid credentials'
-    end
-
-    it "displays a sign in link" do
-      expect(page).to have_content 'Sign In'
-    end
-  end
-
   context "redirects" do
     it "to the current page after signing in" do
-      sign_in from: '/videos/1'
-      expect(current_path).to eq('/videos/1')
-    end
-
-    it "to the current page after failing to sign in" do
-      fail_to_sign_in from: '/videos/1'
-      expect(current_path).to eq('/videos/1')
+      sign_in from: '/videos/fundamentals-ruby-ruby'
+      expect(current_path).to eq('/videos/fundamentals-ruby-ruby')
     end
 
     it "to the root page after signing in directly" do
       sign_in from: '/auth/new'
-      expect(current_path).to eq('/')
-    end
-
-    it "to the root page after failing to sign in directly" do
-      fail_to_sign_in from: '/auth/new'
       expect(current_path).to eq('/')
     end
   end

@@ -2,7 +2,7 @@ feature "A custom index page is displayed by rendering ERB from the configuratio
   before(:each) { visit('/') }
 
   it "renders plain text from the index template" do
-    expect(page).to have_content 'Designing and Maintaining Software'
+    expect(page).to have_content 'Explaining Ruby to Intelligent Koalas'
   end
 
   it "renders HTML from the index template" do
