@@ -7,6 +7,19 @@ class Flippd < Sinatra::Application
     @module = JSON.load(open(ENV['CONFIG_URL'] + "module.json"))
     @phases = @module['phases']
 
+    @phases.each do |phase|
+      phase['topics'].each do |topic|
+        topic['videos'].each do |video|
+          if video["tags"]
+            video["tags"].each do |tag|
+              Tag.first_or_create({ :video_id => video["id"], :text => tag },
+                                  { :video_id => video["id"], :text => tag })
+            end
+          end
+        end
+      end
+    end
+
     # The configuration doesn't have to include identifiers, so we
     # add an identifier to each phase and video
     phase_id = 1
