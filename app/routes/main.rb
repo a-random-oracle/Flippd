@@ -67,4 +67,13 @@ class Flippd < Sinatra::Application
     pass unless @video
     erb :video
   end
+  
+  post '/videos/:id/add_tag' do
+    if @user.has_permission? :add_tag and params['text'] and params['text'] != ""
+      Tag.create({ :video_id => params['id'], :text => params['text'] })
+    end
+    
+    video_page_tag_section = '/videos/' + params['id'] + '#tags'
+    redirect to video_page_tag_section
+  end
 end

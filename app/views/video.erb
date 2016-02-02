@@ -28,26 +28,18 @@
   <div id="player"></div>
 </div>
 
-<% if @video["tags"] %>
-<div id="tags" class="row" style="margin-top: 1.5em;">
-  <div class="col-xs-6 col-md-6">
-    <% @video["tags"].each do |tag| %>
-	  <span class="label label-info"><%=tag%></span>
-    <% end %>
-  </div>
-</div>
-<% end %>
-
 <% tags = Tag.all(:video_id => @video["id"]) %>
-<% if tags %>
 <div id="tags" class="row" style="margin-top: 1.5em;">
-  <div class="col-xs-6 col-md-6">
+  <div class="col-xs-12 col-md-12">
     <% tags.each do |tag| %>
-	  <span class="label label-info"><%=tag%></span>
+	<span class="label label-primary"><%=tag.text%></span>
+    <% end %>
+    <% if @user.has_permission? :add_tag %>
+    <a href="#" data-toggle="popover" data-container="#add-tag-popover" data-html="true" data-content="<form method='post' action='/videos/<%=@video['id']%>/add_tag' class='form-horizontal' role='form'><div class='form-group' style='margin-bottom: 0;'><div class='col-md-8' style='padding-right: 1px;'><input type='text' class='form-control' name='text'/></div><div class='col-md-4' style='padding-left: 1px;'><button type='submit' class='btn btn-default form-control'>Add</button></div></form>" onclick="return false"><span class="label label-success">Add a tag</span></a>
+    <div id="add-tag-popover"></div>
     <% end %>
   </div>
 </div>
-<% end %>
 
 <% if @video["resources"] %>
 <div id="resources" class="row" style="margin-top: 1.5em;">

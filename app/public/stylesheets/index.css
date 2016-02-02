@@ -15,3 +15,6 @@ body {
 #player {
   border: 1px solid black;
 }
+#add-tag-popover .popover {
+  width: 230px;
+}
