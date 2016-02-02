@@ -43,6 +43,14 @@ body {
   max-width: 100%;
 }
 
+.question input[type=text] {
+    width: 320px;
+}
+
+.quiz input[type=submit] {
+    margin-top: 20px;
+}
+
 .correct-answer {
     color: green;
 }

@@ -1,5 +1,5 @@
 module Questions
-  class Textarea
+  class TextBox
     def initialize(index, question_json)
       @index = index
       @text = question_json['question']
@@ -16,7 +16,7 @@ module Questions
     end
 
     def to_html
-      %(<textarea name="q-#{@index}"></textarea>)
+      %(<input type="text" name="q-#{@index}" />)
     end
   end
 end
