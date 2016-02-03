@@ -15,6 +15,29 @@ body {
 #player {
   border: 1px solid black;
 }
+.add-tag-button:link,
+.add-tag-button:visited,
+.add-tag-button:hover,
+.add-tag-button:active {
+  text-decoration: none;
+}
+.add-tag-label:hover {
+  color: #0645AD;
+}
 #add-tag-popover .popover {
   width: 230px;
+}
+.delete-tag-button {
+  color: red;
+  background-color: transparent;
+  display: inline-block;
+  margin: 0px 0px;
+  padding: 0px 0px;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+.delete-tag-button:hover {
+  text-decoration: none;
 }

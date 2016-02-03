@@ -34,46 +34,4 @@ class Flippd < Sinatra::Application
     pass unless @phase
     erb :phase
   end
-
-  get '/videos/:id' do
-    all_videos = []
-    @phases.each do |phase|
-      phase['topics'].each do |topic|
-        topic['videos'].each do |video|
-          all_videos << video
-        end
-      end
-    end
-
-    @phases.each do |phase|
-      phase['topics'].each do |topic|
-        topic['videos'].each do |video|
-          if video["id"] == params['id']
-            @phase = phase
-            @video = video
-
-            index = nil
-            all_videos.each_with_index do |vid, ind|
-              index = ind if vid["id"] == video["id"]
-            end
-
-            @next_video = all_videos[index + 1] unless index + 1 > all_videos.size
-            @previous_video = all_videos[index - 1] unless index - 1 < 0
-          end
-        end
-      end
-    end
-
-    pass unless @video
-    erb :video
-  end
-  
-  post '/videos/:id/add_tag' do
-    if @user.has_permission? :add_tag and params['text'] and params['text'] != ""
-      Tag.create({ :video_id => params['id'], :text => params['text'] })
-    end
-    
-    video_page_tag_section = '/videos/' + params['id'] + '#tags'
-    redirect to video_page_tag_section
-  end
 end
