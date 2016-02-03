@@ -1,3 +1,5 @@
+require_relative '../question-feedback'
+
 module Questions
   class MultipleSelect
     def initialize(index, question_json)
@@ -13,7 +15,7 @@ module Questions
 
     def mark(answer)
       correct = answer == @answer.collect { |a| a.to_s }
-      QuestionMark.new(correct, correct ? nil : feedback_string)
+      QuestionFeedback.new(correct, correct ? nil : feedback_string)
     end
 
     def to_html

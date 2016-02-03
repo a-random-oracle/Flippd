@@ -1,3 +1,5 @@
+require_relative '../question-feedback'
+
 module Questions
   class TextBox
     def initialize(index, question_json)
@@ -12,7 +14,7 @@ module Questions
 
     def mark(answer)
       correct = answer && (answer.strip == @answer.strip)
-      QuestionMark.new(correct, correct ? nil : %(The correct answer was "#{@answer}".))
+      QuestionFeedback.new(correct, correct ? nil : %(The correct answer was "#{@answer}".))
     end
 
     def to_html

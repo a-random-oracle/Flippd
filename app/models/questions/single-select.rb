@@ -1,3 +1,5 @@
+require_relative '../question-feedback'
+
 module Questions
   class SingleSelect
     def initialize(index, question_json)
@@ -13,7 +15,7 @@ module Questions
 
     def mark(answer)
       correct = answer == @answer.to_s
-      QuestionMark.new(correct, correct ? nil : %(The correct answer was "#{@options[@answer]}".))
+      QuestionFeedback.new(correct, correct ? nil : %(The correct answer was "#{@options[@answer]}".))
     end
 
     def to_html
