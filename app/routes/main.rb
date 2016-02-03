@@ -12,8 +12,9 @@ class Flippd < Sinatra::Application
         topic['videos'].each do |video|
           if video["tags"]
             video["tags"].each do |tag|
-              Tag.first_or_create({ :video_id => video["id"], :text => tag },
-                                  { :video_id => video["id"], :text => tag })
+              Tag.first_or_create({ :video_id => video["id"],
+                                    :text => tag,
+                                    :modifiable => false })
             end
           end
         end

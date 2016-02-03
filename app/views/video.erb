@@ -33,9 +33,9 @@
   <div class="col-xs-12 col-md-12">
     <% tags.each do |tag| %>
     <form method="post" action="/videos/<%=@video['id']%>/delete_tag" style="display: inline;">
-      <span class="label label-primary"><%=tag.text%></span>
-      <% if @user.has_permission? :delete_tag %>
-      <button class="delete-tag-button" style="vertical-align: middle;"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+      <span class="label <%=if tag.modifiable then 'label-primary' else 'label-fixed' end%>"><%=tag.text%></span>
+      <% if tag.modifiable and @user.has_permission? :delete_tag %>
+      <button class="delete-tag-button" style="vertical-align: middle; margin-left: -3px;"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
       <input type="hidden" name="tag_id" value="<%=tag.id%>">
       <% end %>
     </form>

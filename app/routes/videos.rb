@@ -44,7 +44,7 @@ class Flippd < Sinatra::Application
   post '/videos/:id/delete_tag' do
     if @user.has_permission? :delete_tag and params['tag_id']
       tag = Tag.get(params['tag_id'])
-      tag.destroy if tag
+      tag.destroy if tag and tag.modifiable
     end
 
     video_page_tag_section = '/videos/' + params['id'] + '#tags'
