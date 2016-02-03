@@ -1,3 +1,5 @@
+require 'sanitize'
+
 class Flippd < Sinatra::Application
   get '/videos/:id' do
     all_videos = []
@@ -33,8 +35,11 @@ class Flippd < Sinatra::Application
   end
   
   post '/videos/:id/add_tag' do
-    if @user.has_permission? :add_tag and params['text'] and params['text'] != ""
-      Tag.create({ :video_id => params['id'], :text => params['text'] })
+    if params['text'] and @user.has_permission? :add_tag
+      sanitised_text = Sanitize.clean(params['text'])
+      if sanitised_text != ""
+        Tag.create({ :video_id => params['id'], :text => sanitised_text })
+      end
     end
     
     video_page_tag_section = '/videos/' + params['id'] + '#tags'
