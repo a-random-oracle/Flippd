@@ -1,24 +1,24 @@
-class Quiz
-  attr_reader :name, :questions
+require_relative 'quiz-result'
 
-  def initialize(quiz_json)
+class Quiz
+  attr_reader :id, :name, :questions
+
+  def initialize(id, quiz_json)
+    @id = id
     @name = quiz_json['name']
     @questions = questions_from(quiz_json)
   end
 
   def self.load_from_config(id)
     quizzes = JSON.load(open(ENV['CONFIG_URL'] + "quizzes.json"))
-    quizzes[id] ? Quiz.new(quizzes[id]) : nil
+    quizzes[id] ? Quiz.new(id, quizzes[id]) : nil
   end
 
   def mark(params)
-    @questions.collect.with_index do |question, index|
+    marks = @questions.collect.with_index do |question, index|
       question.mark(params["q-#{index}"])
     end
-  end
-
-  def marks_available
-    @questions.count
+    QuizResult.new({:quiz_id => @id, :marks => marks})
   end
 
   private

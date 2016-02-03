@@ -1,13 +1,13 @@
 <h1><%= @quiz.name %></h1>
 
 <p class="lead">
-  <%= @percentage >= 50 ? "Congratulations!" : "Commiserations!" %>
-  You gained <strong><%= @percentage %>%</strong> of the available marks.
+  <%= @result.percentage >= 50 ? "Congratulations!" : "Commiserations!" %>
+  You gained <strong><%= @result.percentage %>%</strong> of the available marks.
 </p>
 
 <p>The marks awarded for each question were as follows:</p>
 
-<% @quiz.questions.zip(@marks).each do |question, mark| %>
+<% @quiz.questions.zip(@result.marks).each do |question, mark| %>
   <div class="question">
     <h2><%= question.name %></h2>
     <p class="<%= mark.correct? ? "correct" : "incorrect" %>-answer">

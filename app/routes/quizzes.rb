@@ -1,18 +1,25 @@
 class Flippd < Sinatra::Application
   get '/quizzes/:id' do
-    @quiz = Quiz.load_from_config(params['id'])
+    id = params['id']
+    @quiz = Quiz.load_from_config(id)
     pass unless @quiz
-    erb :quiz
+
+    @result = @user.is_logged_in? && @user.quiz_results.first({:quiz_id => id})
+    erb @result ? :quiz_results : :quiz
   end
 
   post '/quizzes/:id' do
-    @quiz = Quiz.load_from_config(params['id'])
+    id = params['id']
+    @quiz = Quiz.load_from_config(id)
     pass unless @quiz
 
-    @marks = @quiz.mark(params)
-    total_marks = @marks.count { |mark| mark.correct? }
+    @result = @quiz.mark(params)
 
-    @percentage = ((total_marks.to_f / @quiz.marks_available.to_f) * 100).round
+    if @user.has_permission? :take_assessment then
+      @user.quiz_results << @result
+      @user.save
+    end
+
     erb :quiz_results
   end
 end

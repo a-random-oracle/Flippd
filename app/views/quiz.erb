@@ -1,3 +1,17 @@
+<% if not @user.is_logged_in? then %>
+    <div class="alert alert-warning">
+        <strong>You are not signed in.</strong>
+        You can take this quiz anonymously but, if you do, your results will not be saved.
+    </div>
+<% end %>
+
+<% if @user.is_logged_in? && !@user.has_permission?(:take_assessment) then %>
+    <div class="alert alert-warning">
+        <strong>You are not required to take this assessment.</strong>
+        You can take it anyway but, if you do, your results will not be saved. If this is a mistake, please contact your module leader.
+    </div>
+<% end %>
+
 <h1><%= @quiz.name %></h1>
 <p class="lead">Answer the following questions:</p>
 
