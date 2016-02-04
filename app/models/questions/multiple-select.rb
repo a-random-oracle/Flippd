@@ -19,14 +19,13 @@ module Questions
     end
 
     def to_html
-      options_html = @options.collect.with_index do |option, index|
+      @options.collect.with_index do |option, index|
         id = "q-#{@index}-#{index}"
         %(<div>
             <input id="#{id}" type="checkbox" name="q-#{@index}[]" value="#{index}" />
             <label for="#{id}">#{option}</label>
           </div>)
-      end
-      options_html.join("\n")
+      end.join("\n")
     end
 
     private
