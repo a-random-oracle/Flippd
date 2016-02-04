@@ -47,12 +47,34 @@ class Flippd < Sinatra::Application
   end
 
   post '/videos/:id/delete_tag' do
-    if @user.has_permission? :delete_tag and params['tag_id']
+    if params['tag_id'] and @user.has_permission? :delete_tag
       tag = Tag.get(params['tag_id'])
       tag.destroy if tag and tag.modifiable
     end
 
     video_page_tag_section = '/videos/' + params['id'] + '#tags'
     redirect to video_page_tag_section
+  end
+
+  post '/videos/:id/add_comment' do
+    if params['text'] and @user.has_permission? :leave_comment
+      sanitised_text = Sanitize.clean(params['text'])
+      if sanitised_text != ""
+        Comment.create({ :video_id => params['id'], :text => sanitised_text })
+      end
+    end
+
+    video_page_comments_section = '/videos/' + params['id'] + '#comments'
+    redirect to video_page_comments_section
+  end
+
+  post '/videos/:id/delete_comment' do
+    if params['comment_id'] and @user.has_permission? :moderate_comments
+      comment = Comment.get(params['comment_id'])
+      comment.destroy if comment
+    end
+
+    video_page_comments_section = '/videos/' + params['id'] + '#comments'
+    redirect to video_page_comments_section
   end
 end

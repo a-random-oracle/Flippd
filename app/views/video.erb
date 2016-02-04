@@ -47,6 +47,51 @@
   </div>
 </div>
 
+<% comments = Comment.all(:video_id => @video["id"]) %>
+<div id="comments" class="row" style="margin-top: 1.5em;">
+  <div class="col-xs-12 col-md-12">
+    <% comments.each do |comment| %>
+    <div class="panel panel-default comment-panel">
+      <div class="panel-body comment-panel-body">
+        <form method="post" action="/videos/<%=@video['id']%>/delete_comment" class="form-vertical">
+          <div class="form-group" style="margin-bottom: 0;">
+            <% if @user.has_permission? :moderate_comments %>
+            <div class="col-md-11" style="padding: 2px;">
+              <input type="text" class="form-control" value="<%=comment.text%>" readonly></input>
+            </div>
+            <div class="col-md-1" style="padding: 2px;">
+              <button class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+              <input type="hidden" name="comment_id" value="<%=comment.id%>">
+            </div>
+            <% else %>
+            <div class="col-md-12" style="padding: 2px;">
+              <input type="text" class="form-control" style="cursor: default;" value="<%=comment.text%>" disabled></input>
+            </div>
+            <% end %>
+          </div>
+        </form>
+      </div>
+    </div>
+    <% end %>
+    <% if @user.has_permission? :leave_comment %>
+    <div class="panel panel-default comment-panel">
+      <div class="panel-body comment-panel-body">
+        <form method="post" action="/videos/<%=@video['id']%>/add_comment" class="form-vertical">
+          <div class="form-group" style="margin-bottom: 0;">
+            <div class="col-md-11" style="padding: 1px;">
+              <input type="text" class="form-control" name="text" placeholder="Add a comment"></input>
+             </div>
+            <div class="col-md-1" style="padding: 1px;">
+              <button class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+             </div>
+           </div>
+        </form>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
+
 <% if @video["resources"] %>
 <div id="resources" class="row" style="margin-top: 1.5em;">
   <div class="col-xs-6 col-md-6">

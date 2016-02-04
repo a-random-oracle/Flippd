@@ -48,3 +48,9 @@ body {
 .delete-tag-button:hover {
   text-decoration: none;
 }
+.comment-panel {
+  margin-bottom: 0;
+}
+.comment-panel-body {
+  padding: 5px 5px 5px 5px;
+}
