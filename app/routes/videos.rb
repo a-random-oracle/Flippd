@@ -60,9 +60,16 @@ class Flippd < Sinatra::Application
     if params['text'] and @user.has_permission? :leave_comment
       sanitised_text = Sanitize.clean(params['text'])
       if sanitised_text != ""
-        Comment.create({ :video_id => params['id'],
-                         :author => @user.id,
-                         :text => sanitised_text })
+        if params['parent']
+          Comment.create({ :video_id => params['id'],
+                           :author => @user.id,
+                           :text => sanitised_text,
+                           :parent => params['parent'] })
+        else
+          Comment.create({ :video_id => params['id'],
+                           :author => @user.id,
+                           :text => sanitised_text })
+        end
       end
     end
 

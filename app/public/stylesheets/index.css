@@ -50,6 +50,10 @@ body {
 }
 .comment-panel {
   margin-bottom: 0;
+  border: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
 }
 .comment-panel-body {
   padding: 5px 5px 5px 5px;
