@@ -1,0 +1,12 @@
+<h1><%= @quiz.name %></h1>
+<p class="lead">Answer the following questions:</p>
+
+<form class="quiz" method="post">
+  <% @quiz.questions.each do |q| %>
+    <div class="question">
+      <h2><%= q.name %></h2>
+      <%= q.to_html %>
+    </div>
+  <% end %>
+  <input class="btn btn-primary" type="submit" value="Submit your answers" />
+</form>
