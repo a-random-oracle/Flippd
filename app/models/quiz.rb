@@ -1,3 +1,4 @@
+require 'json-schema'
 require_relative 'quiz-result'
 
 class Quiz
@@ -11,6 +12,7 @@ class Quiz
 
   def self.load_from_config(id)
     quizzes = JSON.load(open(ENV['CONFIG_URL'] + "quizzes.json"))
+    JSON::Validator.validate!('app/resources/quizzes.schema.json', quizzes)
     quizzes[id] ? Quiz.new(id, quizzes[id]) : nil
   end
 
