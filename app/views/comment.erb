@@ -8,7 +8,8 @@
       </div>
       <div class="col-md-12" style="padding: 0;">
         <div class="col-md-11" style="padding: 2px;">
-          <textarea class="form-control comment-textarea" style="cursor: default;" rows="1"><%=comment.text%></textarea>
+          <% comment_text = comment.text.gsub(/(@([\d]{1,2}:)?([0-5])?[\d]:[0-5][\d])/, '<a href="#" class="time-link">\1</a>') %>
+          <div class="form-control comment-textarea" style="cursor: default;" rows="1"><%=comment_text%></div>
         </div>
         <div class="col-md-1" style="padding: 2px;">
           <% if @user.has_permission? :moderate_comments %>

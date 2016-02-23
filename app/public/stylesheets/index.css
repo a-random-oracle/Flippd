@@ -60,9 +60,13 @@ body {
 }
 .comment-textarea {
   resize: none;
-  -webkit-box-shadow: none !important;
-  -moz-box-shadow: none !important;
-  box-shadow: none !important;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  overflow: auto;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
 }
 .new-comment-textarea {
   height: auto;

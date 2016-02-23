@@ -88,4 +88,10 @@
   function stopVideo() {
     player.stopVideo();
   }
+  function getVideoTime() {
+    return player.getCurrentTime();
+  }
+  function setVideoTime(time) {
+    player.seekTo(time);
+  }
 </script>
