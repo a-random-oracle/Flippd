@@ -26,11 +26,19 @@ function timeLinkToSeconds(timeLink) {
   return time.getTime() / 1000;
 }
 
-
-
 function expandCommentTextareas(textareas) {
   textareas.each(function(index, item) {
     $(this).height(Math.max(item.scrollHeight, 55));
+  });
+}
+
+function linkTimeLinks() {
+  $('.time-link').click(function() {
+  	setVideoTime(timeLinkToSeconds($(this).text()));
+    $('html, body').animate({
+        scrollTop: $("#player").offset().top - 60
+    }, 500);
+    return false;
   });
 }
 
@@ -49,13 +57,7 @@ $(function() {
 });
 
 $(function() {
-  $('.time-link').click(function() {
-  	setVideoTime(timeLinkToSeconds($(this).text()));
-    $('html, body').animate({
-        scrollTop: $("#player").offset().top - 60
-    }, 500);
-    return false;
-  });
+  linkTimeLinks();
 });
 
 $(function() {
@@ -66,6 +68,45 @@ $(function() {
     var textBefore = currentText.substring(0, currentPosition);
     var textAfter = currentText.substring(currentPosition, currentText.length);
     textArea.val(textBefore + secondsToTimeLink(getVideoTime()) + textAfter);
+    return false;
+  });
+});
+
+$(function() {
+  $('.edit-button').click(function() {
+  	$(this).toggle();
+    $(this).parent().find('.confirm-button').toggle();
+    
+    var deleteButton = $(this).parent().find('.delete-button');
+    if (deleteButton.length) {
+      $(this).parent().find('.delete-button').toggle();
+    }
+    
+    $(this).parent().parent().find('.comment-textarea').prop('contenteditable', true);
+    return false;
+  });
+});
+
+$(function() {
+  $('.confirm-button').click(function() {
+  	$(this).toggle();
+    $(this).parent().find('.edit-button').toggle();
+    
+    var deleteButton = $(this).parent().find('.delete-button');
+    if (deleteButton.length) {
+      $(this).parent().find('.delete-button').toggle();
+    }
+    
+    var textbox = $(this).parent().parent().find('.comment-textarea');
+    textbox.prop('contenteditable', false);
+    
+    var videoID = $(this).parent().find('[name=video_id]').val();
+    var commentID = $(this).parent().find('[name=comment_id]').val();
+    var text = textbox.text();
+    $.post('/videos/' + videoID + '/edit_comment', { comment_id: commentID, text: text }, function() {
+    	textbox.html(text.replace(/(@([\d]{1,2}:)?([0-5])?[\d]:[0-5][\d])/g, '<a href="#" class="time-link">$1</a>'));
+    	linkTimeLinks();
+    });
     return false;
   });
 });
