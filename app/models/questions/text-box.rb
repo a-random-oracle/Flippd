@@ -20,5 +20,28 @@ module Questions
     def to_html
       %(<input type="text" name="q-#{@index}" />)
     end
+
+    def self.schema
+      {
+        "properties": {
+          "question": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "pattern": "^text-box$"
+          },
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "question",
+          "type",
+          "answer"
+        ],
+        "additionalProperties": false
+      }
+    end
   end
 end

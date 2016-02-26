@@ -28,5 +28,35 @@ module Questions
       end
       options_html.join("\n")
     end
+
+    def self.schema
+      {
+        "properties": {
+          "question": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "pattern": "^single-select$"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "answer": {
+            "type": "integer",
+          }
+        },
+        "required": [
+          "question",
+          "type",
+          "options",
+          "answer"
+        ],
+        "additionalProperties": false
+      }
+    end
   end
 end

@@ -28,6 +28,39 @@ module Questions
       end.join("\n")
     end
 
+    def self.schema
+      {
+        "properties": {
+          "question": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "pattern": "^multiple-select$"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "answer": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        },
+        "required": [
+          "question",
+          "type",
+          "options",
+          "answer"
+        ],
+        "additionalProperties": false
+      }
+    end
+
     private
 
     def feedback_string

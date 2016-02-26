@@ -5,5 +5,11 @@ module Questions
     def to_html
       %(<textarea name="q-#{@index}"></textarea>)
     end
+
+    def self.schema
+      parent = super
+      parent[:properties][:type][:pattern] = "^text-area$"
+      parent
+    end
   end
 end
