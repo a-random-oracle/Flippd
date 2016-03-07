@@ -10,8 +10,8 @@ class User
 
   def self.from_oauth(oauth_data)
     # Fetch authorisation data (from the URL in the project's .env file)
-    users_json = JSON.load(open(ENV['CONFIG_URL'] + "users.json")) rescue {}
-    permissions_json = JSON.load(open(ENV['CONFIG_URL'] + "permissions.json")) rescue {}
+    users_json = ResourceProvider.get_users()
+    permissions_json = ResourceProvider.get_permissions()
 
     email = oauth_data.info.email
     name = oauth_data.info.name

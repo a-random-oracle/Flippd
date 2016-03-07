@@ -1,15 +1,12 @@
-require 'open-uri'
-require 'json'
-
 class Flippd < Sinatra::Application
   before do
     # Load in the configuration (at the URL in the project's .env file)
-    @module = JSON.load(open(ENV['CONFIG_URL'] + "module.json"))
-    @phases = @module['phases']
+    @module = ResourceProvider.get_module()
+    @phases = ResourceProvider.get_phases()
   end
 
   get '/' do
-    erb open(ENV['CONFIG_URL'] + "index.erb").read
+    erb ResourceProvider.get_index()
   end
 
   get '/phases/:title' do
