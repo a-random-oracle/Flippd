@@ -1,12 +1,12 @@
 class Flippd < Sinatra::Application
   before do
     # Load in the configuration (at the URL in the project's .env file)
-    @module = ResourceProvider.get_module()
-    @phases = ResourceProvider.get_phases()
+    @module = ResourceRequester.request(Resources::MODULE)
+    @phases = @module['phases']
   end
 
   get '/' do
-    erb ResourceProvider.get_index()
+    erb ResourceRequester.request(Resources::INDEX_PAGE)
   end
 
   get '/phases/:title' do
