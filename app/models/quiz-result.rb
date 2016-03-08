@@ -1,3 +1,5 @@
+require 'erik-question-feedback'
+
 class QuizResult
   include DataMapper::Resource
 

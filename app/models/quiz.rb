@@ -1,6 +1,11 @@
 require 'json-schema'
 require_relative 'quiz-result'
 
+require 'erik-text-box'
+require 'erik-text-area'
+require 'erik-single-select'
+require 'erik-multiple-select'
+
 class Quiz
   attr_reader :id, :name, :questions
 

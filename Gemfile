@@ -12,6 +12,11 @@ gem 'dm-types', '~> 1.2', '>= 1.2.2'
 gem "dm-mysql-adapter", "~> 1.2.0"
 gem "dotenv", "~> 2.0.2"
 gem "json-schema", "~> 2.6"
+gem 'erik-question-feedback', '~> 0.2'
+gem 'erik-text-box', '~> 0.2'
+gem 'erik-text-area', '~> 0.2'
+gem 'erik-single-select', '~> 0.2'
+gem 'erik-multiple-select', '~> 0.2'
 
 group :development do
   gem "rake", "~> 10.4.2"
