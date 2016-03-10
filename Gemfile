@@ -12,6 +12,7 @@ gem 'dm-types', '~> 1.2', '>= 1.2.2'
 gem "dm-mysql-adapter", "~> 1.2.0"
 gem "dotenv", "~> 2.0.2"
 gem "json-schema", "~> 2.6"
+gem "sanitize", "~> 4.0", ">= 4.0.1"
 
 group :development do
   gem "rake", "~> 10.4.2"

@@ -1,0 +1,10 @@
+<% levels = 2 unless levels %>
+<% comments = Comment.all(:video_id => @video["id"], :parent => nil) unless comments %>
+<% comments.each do |comment| %>
+<%=erb :comment, :locals => {:comment => comment, :levels => levels}%>
+<% end %>
+<% if defined? parent %>
+<%=erb :new_comment, :locals => {:parent => parent}%>
+<% else %>
+<%=erb :new_comment%>
+<% end %>

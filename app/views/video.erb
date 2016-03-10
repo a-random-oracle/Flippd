@@ -28,6 +28,31 @@
   <div id="player"></div>
 </div>
 
+<% tags = Tag.all(:video_id => @video["id"]) %>
+<div id="tags" class="row" style="margin-top: 1.5em;">
+  <div class="col-xs-12 col-md-12">
+    <% tags.each do |tag| %>
+    <form method="post" action="/videos/<%=@video['id']%>/delete_tag" style="display: inline;">
+      <span class="label <%=if tag.modifiable then 'label-primary' else 'label-fixed' end%>"><%=tag.text%></span>
+      <% if tag.modifiable and @user.has_permission? :delete_tag %>
+      <button class="delete-tag-button" style="vertical-align: middle; margin-left: -3px;"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+      <input type="hidden" name="tag_id" value="<%=tag.id%>">
+      <% end %>
+    </form>
+    <% end %>
+    <% if @user.has_permission? :add_tag %>
+    <a href="#" class="add-tag-button" data-toggle="popover" data-container="#add-tag-popover" data-html="true" data-content="<form method='post' action='/videos/<%=@video['id']%>/add_tag' class='form-horizontal' role='form'><div class='form-group' style='margin-bottom: 0;'><div class='col-md-8' style='padding-right: 1px;'><input type='text' class='form-control' name='text'/></div><div class='col-md-4' style='padding-left: 1px;'><button type='submit' class='btn btn-default form-control'>Add</button></div></form>" onclick="return false"><span class="label label-success add-tag-label">Add a tag</span></a>
+    <div id="add-tag-popover"></div>
+    <% end %>
+  </div>
+</div>
+
+<div id="comments" class="row" style="margin-top: 1.5em;">
+  <div class="col-xs-12 col-md-12">
+    <%=erb :comments%>
+  </div>
+</div>
+
 <% if @video["resources"] %>
 <div id="resources" class="row" style="margin-top: 1.5em;">
   <div class="col-xs-6 col-md-6">
@@ -62,5 +87,11 @@
   }
   function stopVideo() {
     player.stopVideo();
+  }
+  function getVideoTime() {
+    return player.getCurrentTime();
+  }
+  function setVideoTime(time) {
+    player.seekTo(time);
   }
 </script>
