@@ -26,8 +26,8 @@ class Quiz
   def questions_from(quiz_json)
     quiz_json['questions'].collect.with_index do |question_json, index|
       qclass = class_name_from_json_type(question_json['type'])
-      Questions.const_get(qclass).new(index, question_json) rescue nil
-    end.compact
+      Questions.const_get(qclass).new(index, question_json)
+    end
   end
 
   def class_name_from_json_type(json_type)
