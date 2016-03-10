@@ -4,8 +4,8 @@ module Questions
   class TextBox
     def initialize(index, question_json)
       @index = index
-      @text = question_json['question']
-      @answer = question_json['answer']
+      @text = question_json['question'] or raise "No text provided"
+      @answer = question_json['answer'] or raise "No answer provided"
     end
 
     def name

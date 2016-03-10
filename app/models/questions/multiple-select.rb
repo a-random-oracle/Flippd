@@ -4,9 +4,16 @@ module Questions
   class MultipleSelect
     def initialize(index, question_json)
       @index = index
-      @text = question_json['question']
+      @text = question_json['question'] or raise "No question text provided"
+
       @options = question_json['options']
+      raise "No options provided" unless @options && @options.length > 0
+
       @answer = question_json['answer']
+      raise "No options provided" unless @answer && @answer.length > 0
+      raise "Invalid answer(s) provided" unless @answer.all? do |answer|
+        answer.is_a?(Integer) && answer >= 0 && answer < @options.length
+      end
     end
 
     def name

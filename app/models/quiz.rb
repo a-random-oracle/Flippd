@@ -4,8 +4,8 @@ class Quiz
   attr_reader :id, :name, :questions
 
   def initialize(id, quiz_json)
-    @id = id
-    @name = quiz_json['name']
+    @id = id or raise "No quiz id provided"
+    @name = quiz_json['name'] or raise "No quiz name provided for quiz with id #{id}"
     @questions = questions_from(quiz_json)
   end
 
