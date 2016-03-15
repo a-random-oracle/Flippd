@@ -6,23 +6,28 @@ class ResourceProvider
     PERMISSIONS = ENV['CONFIG_URL'] + 'permissions.json'
     
     def get_index()
-      ERBLoader.load(INDEX)
+      index = ERBLoader.load(INDEX)
+      index if ERBValidator.validate(index)
     end
     
     def get_module()
-      JSONLoader.load(MODULE)
+      mod = JSONLoader.load(MODULE)
+      mod if ModuleValidator.validate(mod)
     end
     
     def get_phases()
-      get_module()['phases']
+      phases = get_module()['phases']
+      phases if PhasesValidator.validate(phases)
     end
     
     def get_users()
-      JSONLoader.load(USERS)
+      users = JSONLoader.load(USERS)
+      users if UsersValidator.validate(users)
     end
     
     def get_permissions()
-      JSONLoader.load(PERMISSIONS)
+      permissions = JSONLoader.load(PERMISSIONS)
+      permissions if PermissionsValidator.validate(permissions)
     end
   end
 end
