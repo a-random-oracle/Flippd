@@ -10,7 +10,7 @@ module Questions
       raise "No options provided" unless @options && @options.length > 0
 
       @answer = question_json['answer']
-      raise "No options provided" unless @answer && @answer.length > 0
+      raise "No answers provided" unless @answer && @answer.length > 0
       raise "Invalid answer(s) provided" unless @answer.all? do |answer|
         answer.is_a?(Integer) && answer >= 0 && answer < @options.length
       end
