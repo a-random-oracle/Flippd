@@ -1,8 +1,13 @@
 class ResourceRequester
   class << self
     def request(resource)
-      loader = find_loader(resource.type)
-      loader.load(resource)
+      loaded_resource = load_resource(resource)
+      
+      if validate_resource(resource, loaded_resource)
+        loaded_resource
+      else
+        raise "Resource at #{resource.location} could not be loaded."
+      end
     end
     
     private
@@ -12,6 +17,16 @@ class ResourceRequester
         loader = ResourceLoaders.const_get(loader_symbol)
         return loader if loader::LOADER_FOR == resource_type
       end
+    end
+    
+    def load_resource(resource)
+      loader = find_loader(resource.type)
+      loader ? loader.load(resource) : nil
+    end
+    
+    def validate_resource(resource, loaded_resource)
+      validator = resource.validator
+      validator ? validator.validate(loaded_resource) : true
     end
   end
 end
