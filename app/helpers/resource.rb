@@ -1,23 +1,13 @@
 class Resource
   attr_reader :location
-  attr_reader :type
+  attr_reader :loader
 
-  def initialize(location, type)
+  def initialize(location, loader)
     @location = location
-    @type = type
+    @loader = loader
   end
   
   def load()
-    loader = find_loader()
-    loader.load(self)
-  end
-  
-  private
-    
-  def find_loader()
-    ResourceLoaders.constants.each do |loader_symbol|
-      loader = ResourceLoaders.const_get(loader_symbol)
-      return loader if loader::LOADER_FOR == @type
-    end
+    @loader.load(self)
   end
 end
