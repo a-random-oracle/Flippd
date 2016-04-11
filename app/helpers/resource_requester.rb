@@ -2,7 +2,13 @@ class ResourceRequester
   class << self
     def request(resource)
       loaded_resource = load_resource(resource)
-      validate_resource(resource, loaded_resource) ? loaded_resource : resource.default
+      result = validate_resource(resource, loaded_resource) ? loaded_resource : resource.default
+      
+      if block_given?
+        yield result
+      else
+        result
+      end
     end
 
     private
