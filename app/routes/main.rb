@@ -2,7 +2,7 @@ class Flippd < Sinatra::Application
   before do
     # Load in the configuration (at the URL in the project's .env file)
     @module = Resources::MODULE.load()
-    @phases = @module['phases']
+    @phases = Resources::PHASES.load()
   end
 
   get '/' do
