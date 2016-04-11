@@ -9,5 +9,7 @@ class Resource
   
   def load()
     @loader.load(self)
+  rescue
+    nil
   end
 end
