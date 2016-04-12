@@ -11,11 +11,15 @@ class Resource
     @validator = validator
   end
   
-  def load()
+  def load
     loaded_resource = @loader.load(self)
     validate(loaded_resource) ? loaded_resource : @default
   rescue
     @default
+  end
+  
+  def with
+    yield load
   end
   
   private
