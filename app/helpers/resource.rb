@@ -1,23 +1,21 @@
 class Resource
   attr_reader :location
   attr_reader :loader
+  attr_reader :default
   attr_reader :validator
 
-  def initialize(location, loader, validator=nil)
+  def initialize(location, loader, default=nil, validator=nil)
     @location = location
     @loader = loader
+    @default = default
     @validator = validator
   end
   
   def load()
     loaded_resource = @loader.load(self)
-    if validate(loaded_resource)
-      loaded_resource
-    else
-      raise "The resource at #{@location} could not be loaded."
-    end
+    validate(loaded_resource) ? loaded_resource : @default
   rescue
-    nil
+    @default
   end
   
   private
