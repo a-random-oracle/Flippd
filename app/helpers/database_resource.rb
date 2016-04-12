@@ -8,6 +8,7 @@ class DatabaseResource < Resource
     super(DatabaseEntryLoader, nil, nil)
     @table = table
     @selectors = selectors
+    @cache_timeout = 5
   end
 
   def with
