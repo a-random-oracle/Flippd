@@ -1,7 +1,7 @@
 class Resources
-  INDEX_PAGE  = Resource.new(ENV['CONFIG_URL'] + 'index.erb', ERBLoader, :not_found, ERBValidator)
-  MODULE      = Resource.new(ENV['CONFIG_URL'] + 'module.json', JSONLoader, {}, ModuleValidator)
-  PHASES      = Resource.new(ENV['CONFIG_URL'] + 'module.json', PhasesLoader, {}, PhasesValidator)
-  USERS       = Resource.new(ENV['CONFIG_URL'] + 'users.json', JSONLoader, {}, UsersValidator)
-  PERMISSIONS = Resource.new(ENV['CONFIG_URL'] + 'permissions.json', JSONLoader, {}, PermissionsValidator)
+  INDEX_PAGE  = FileResource.new(ENV['CONFIG_URL'] + 'index.erb', ERBLoader, ERBValidator, :not_found)
+  MODULE      = FileResource.new(ENV['CONFIG_URL'] + 'module.json', JSONLoader, ModuleValidator, {})
+  USERS       = FileResource.new(ENV['CONFIG_URL'] + 'users.json', JSONLoader, UsersValidator, {})
+  PERMISSIONS = FileResource.new(ENV['CONFIG_URL'] + 'permissions.json', JSONLoader, PermissionsValidator, {})
+  PHASES      = Resource.new(PhasesLoader, PhasesValidator, {})
 end

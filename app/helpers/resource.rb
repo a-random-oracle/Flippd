@@ -1,11 +1,9 @@
 class Resource
-  attr_reader :location
   attr_reader :loader
-  attr_reader :default
   attr_reader :validator
+  attr_reader :default
 
-  def initialize(location, loader, default=nil, validator=nil)
-    @location = location
+  def initialize(loader, validator=nil, default=nil)
     @loader = loader
     @default = default
     @validator = validator
