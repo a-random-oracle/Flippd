@@ -1,0 +1,22 @@
+<% if @user.has_permission? :leave_comment %>
+<div class="panel panel-default comment-panel">
+  <div class="panel-body comment-panel-body">
+    <div class="form-group" style="margin-bottom: 0;">
+      <form method="post" action="/videos/<%=@video['id']%>/add_comment">
+        <div class="col-md-11" style="padding: 2px;">
+          <% placeholder = if defined? parent then "Add a reply..." else "Add a comment..." end %>
+          <% comment_field_length = Comment.properties[:text].length.to_s %>
+          <textarea class="form-control new-comment-textarea" name="text" placeholder="<%=placeholder%>" rows="1" maxlength="<%=comment_field_length%>"></textarea>
+        </div>
+        <div class="col-md-1" style="padding: 2px;">
+          <button class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+          <a class="add-time" href="#">@Time</a>
+          <%if defined? parent %>
+          <input type="hidden" name="parent" value="<%=parent.id%>">
+          <% end %>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<% end %>

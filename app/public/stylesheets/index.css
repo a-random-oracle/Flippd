@@ -1,5 +1,6 @@
 body {
   padding-top: 50px;
+  padding-bottom: 50px;
 }
 #main {
   padding: 40px 15px;
@@ -14,4 +15,111 @@ body {
 }
 #player {
   border: 1px solid black;
+}
+
+
+
+/* QUIZ RELATED STYLES FOLLOW */
+
+.question {
+  margin-bottom: 10px;
+}
+
+.question h2 {
+  font-size: 16px;
+}
+
+.question input[type=checkbox], .question input[type=radio] {
+  margin-right: 4px;
+}
+
+.question label {
+  font-weight: normal;
+}
+
+.question textarea {
+  width: 640px;
+  height: 200px;
+  max-width: 100%;
+}
+
+.question input[type=text] {
+    width: 320px;
+}
+
+.quiz input[type=submit] {
+    margin-top: 20px;
+}
+
+.correct-answer {
+    color: green;
+}
+
+.incorrect-answer {
+    color: red;
+}
+
+
+
+/* COMMENT AND TAG RELATED STYLES FOLLOW */
+.label-fixed {
+  background-color: #660065;
+}
+.label-fixed[href]:hover,
+.label-fixed[href]:focus {
+  background-color: #80007e;
+}
+.add-tag-button:link,
+.add-tag-button:visited,
+.add-tag-button:hover,
+.add-tag-button:active {
+  text-decoration: none;
+}
+.add-tag-label:hover {
+  color: #0645AD;
+}
+#add-tag-popover .popover {
+  width: 230px;
+}
+.delete-tag-button {
+  color: red;
+  background-color: transparent;
+  display: inline-block;
+  margin: 0px 0px;
+  padding: 0px 0px;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+.delete-tag-button:hover {
+  text-decoration: none;
+}
+.comment-panel {
+  margin-bottom: 0;
+  border: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+.comment-panel-body {
+  padding: 5px 5px 5px 5px;
+}
+.comment-textarea {
+  resize: none;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  overflow: auto;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+.new-comment-textarea {
+  height: auto;
+  width: 100%;
+  min-width: 100%;
+  min-height: 45px;
+  max-width: 100%;
+  max-height: 100%;
 }

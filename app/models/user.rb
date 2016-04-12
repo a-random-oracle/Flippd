@@ -8,6 +8,8 @@ class User
   property :email, String, required: true, length: 150
   property :permissions, Json, required: false, default: [], lazy: false
 
+  has n, :quiz_results
+
   def self.from_oauth(oauth_data)
     # Fetch authorisation data (from the URL in the project's .env file)
     Resources::USERS.with do |users_json|
