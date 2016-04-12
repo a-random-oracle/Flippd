@@ -17,10 +17,12 @@ class User
         group = users_json.keys.find{ |k| users_json[k].include?(email) } || "guest"
         permissions = permissions_json[group] || []
 
-        user = self.first_or_new({ :email => email }, { :name => name, :permissions => permissions })
-        user.update_specific_attributes({ :name => name, :permissions => permissions })
+        user_resource = DatabaseResource.new(User, { :email => email }, { :name => name, :permissions => permissions })
+        user_resource.with do |user|
+          user.update_specific_attributes({ :name => name, :permissions => permissions })
+        end
 
-        user
+        user_resource.load()
       end
     end
   end
@@ -31,7 +33,6 @@ class User
         attribute_set(attribute, value)
       end
     end
-    save # This will short-circuit if no attributes have changed
   end
 
   def is_logged_in?

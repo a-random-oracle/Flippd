@@ -5,7 +5,7 @@ class DatabaseResource < Resource
   attr_reader :selectors
   
   def initialize(table, *selectors)
-    super(DatabaseEntryLoader, nil, table.new)
+    super(DatabaseEntryLoader, nil, nil)
     @table = table
     @selectors = selectors
   end
