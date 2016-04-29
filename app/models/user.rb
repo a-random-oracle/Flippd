@@ -20,8 +20,7 @@ class User
         group = users_json.keys.find{ |k| users_json[k].include?(email) } || "guest"
         permissions = permissions_json[group] || []
 
-        user_resource = DatabaseResource.new(User, { :email => email }, { :name => name, :permissions => permissions })
-        user_resource.cache_timeout = 1
+        user_resource = DatabaseResource.new(User, [{ :email => email }, { :name => name, :permissions => permissions }], 1)
         user_resource.with do |user|
           user.update_specific_attributes({ :name => name, :permissions => permissions })
         end
