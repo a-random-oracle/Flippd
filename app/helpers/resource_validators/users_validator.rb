@@ -1,3 +1,5 @@
+require_relative 'json_validator'
+
 class UsersValidator
   def self.validate(resource)
     JSONValidator.validate(resource, self.schema)

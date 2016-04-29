@@ -1,4 +1,5 @@
 require_relative 'resource'
+require_relative 'resource_loaders/database_entry_loader'
 
 class DatabaseResource < Resource
   attr_reader :table

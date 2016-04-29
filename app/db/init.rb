@@ -7,10 +7,8 @@ else
   DataMapper.setup(:default, 'mysql://root:root@localhost/flippd')
 end
 
-# Require all of the files under /app/models/
-models_directory = File.dirname(__FILE__) + "/../models/"
-model_files = Dir[models_directory + "**/*.rb"]
-model_files.each { |f| require f }
+# Require all of the files under /app/models/
+Dir[File.join(File.dirname(__FILE__), '..', 'models', '**', '*.rb')].each { |file| require file }
 
 DataMapper.finalize
 

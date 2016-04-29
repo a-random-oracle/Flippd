@@ -1,4 +1,5 @@
 require "singleton"
+require_relative '../helpers/database_resource'
 
 class User
   include DataMapper::Resource

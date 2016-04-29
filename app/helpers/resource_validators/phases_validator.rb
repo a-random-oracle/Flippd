@@ -1,3 +1,5 @@
+require_relative 'json_validator'
+
 class PhasesValidator
   def self.validate(resource)
     resource.each do |phase|
