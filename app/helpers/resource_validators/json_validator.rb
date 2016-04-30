@@ -5,7 +5,6 @@ class JSONValidator
     begin
       JSON::Validator.validate!(schema, resource)
     rescue JSON::Schema::ValidationError
-      puts $!.message
       return false
     end
     true
