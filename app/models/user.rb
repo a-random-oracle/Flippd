@@ -1,4 +1,5 @@
 require "singleton"
+require_relative '../helpers/database_resource'
 
 class User
   include DataMapper::Resource
@@ -12,18 +13,21 @@ class User
 
   def self.from_oauth(oauth_data)
     # Fetch authorisation data (from the URL in the project's .env file)
-    users_json = JSON.load(open(ENV['CONFIG_URL'] + "users.json")) rescue {}
-    permissions_json = JSON.load(open(ENV['CONFIG_URL'] + "permissions.json")) rescue {}
+    Resources::USERS.with do |users_json|
+      Resources::PERMISSIONS.with do |permissions_json|
+        email = oauth_data.info.email
+        name = oauth_data.info.name
+        group = users_json.keys.find{ |k| users_json[k].include?(email) } || "guest"
+        permissions = permissions_json[group] || []
 
-    email = oauth_data.info.email
-    name = oauth_data.info.name
-    group = users_json.keys.find{ |k| users_json[k].include?(email) } || "guest"
-    permissions = permissions_json[group] || []
+        user_resource = DatabaseResource.new(User, [{ :email => email }, { :name => name, :permissions => permissions }], 1)
+        user_resource.with do |user|
+          user.update_specific_attributes({ :name => name, :permissions => permissions })
+        end
 
-    user = self.first_or_new({ :email => email }, { :name => name, :permissions => permissions })
-    user.update_specific_attributes({ :name => name, :permissions => permissions })
-
-    user
+        user_resource.load
+      end
+    end
   end
 
   def update_specific_attributes(attributes)
@@ -32,7 +36,6 @@ class User
         attribute_set(attribute, value)
       end
     end
-    save # This will short-circuit if no attributes have changed
   end
 
   def is_logged_in?
