@@ -25,7 +25,7 @@ class User
           user.update_specific_attributes({ :name => name, :permissions => permissions })
         end
 
-        user_resource.load()
+        user_resource.load
       end
     end
   end

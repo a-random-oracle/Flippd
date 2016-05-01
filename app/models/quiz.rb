@@ -11,7 +11,7 @@ class Quiz
   end
 
   def self.load_from_config(id)
-    quizzes = Resources::QUIZZES.load()
+    quizzes = Resources::QUIZZES.load
     quizzes[id] ? Quiz.new(id, quizzes[id]) : nil
   end
 
