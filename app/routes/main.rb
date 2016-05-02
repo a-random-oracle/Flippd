@@ -1,5 +1,6 @@
 require 'open-uri'
 require 'json'
+require_relative '../helpers/karma_calculator'
 
 class Flippd < Sinatra::Application
   before do
@@ -20,6 +21,8 @@ class Flippd < Sinatra::Application
         end
       end
     end
+
+    @karma_calculator = KarmaCalculator.new
   end
 
   get '/' do
