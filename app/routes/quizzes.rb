@@ -17,6 +17,7 @@ class Flippd < Sinatra::Application
 
     if @user.has_permission? :take_assessment then
       @user.quiz_results << @result
+      @user.award_karma(@result.percentage)
       @user.save
     end
 

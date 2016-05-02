@@ -15,6 +15,7 @@ class Flippd < Sinatra::Application
                            :author => @user.id,
                            :text => sanitised_text })
         end
+      @user.award_karma
       end
     end
 

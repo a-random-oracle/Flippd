@@ -7,6 +7,7 @@ class User
   property :name, String, required: true, length: 150
   property :email, String, required: true, length: 150
   property :permissions, Json, required: false, default: [], lazy: false
+  property :karma, Integer, required: false, default: 0
 
   has n, :quiz_results
 
@@ -41,6 +42,12 @@ class User
 
   def has_permission?(permission)
     !permissions.nil? && permissions.include?(permission.to_s)
+  end
+
+  def award_karma(points_to_award=10)
+    current_karma = attribute_get(:karma)
+    attribute_set(:karma, current_karma + points_to_award)
+    save
   end
 end
 
