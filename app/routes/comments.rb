@@ -1,4 +1,5 @@
 require 'sanitize'
+require_relative '../models/gamified_action'
 
 class Flippd < Sinatra::Application
   post '/videos/:id/add_comment' do
@@ -15,6 +16,8 @@ class Flippd < Sinatra::Application
                            :author => @user.id,
                            :text => sanitised_text })
         end
+
+        GamifiedAction.create({ :user_id => @user.id, :action_type => 'add-comment' })
       end
     end
 
