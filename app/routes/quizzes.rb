@@ -1,3 +1,6 @@
+require 'json'
+require_relative '../models/gamified_action'
+
 class Flippd < Sinatra::Application
   get '/quizzes/:id' do
     id = params['id']
@@ -18,6 +21,10 @@ class Flippd < Sinatra::Application
     if @user.has_permission? :take_assessment then
       @user.quiz_results << @result
       @user.save
+
+      GamifiedAction.create({ :user_id => @user.id,
+                              :action_type => 'complete-quiz',
+                              :details => { "result_id": @result.id } })
     end
 
     erb :quiz_results
