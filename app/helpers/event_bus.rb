@@ -1,3 +1,5 @@
+require_relative 'event'
+
 class EventBus
   def initialize
     @event_map = {}
@@ -9,6 +11,7 @@ class EventBus
   end
 
   def notify(event_type, user, details={})
-    @event_map[event_type].each { |listener| listener.notify(event_type, user, details) }
+    event = Event.new(event_type, user, details)
+    @event_map[event_type].each { |listener| listener.notify(event) }
   end
 end
