@@ -4,7 +4,9 @@ class KarmaListener
     event_bus.attach(:complete_quiz, self)
 
     @karma_values = JSON.load(open(ENV['CONFIG_URL'] + "karma.json"))
-    @karma_awarders = {}
+    @karma_awarders = { :add_comment   => lambda { |event_type, details| get_event_value(event_type) },
+                        :complete_quiz => lambda { |event_type, details|
+                                                   (details['result'].percentage * get_event_value(event_type)) / 100 } }
   end
 
   def notify(event_type, user, details)

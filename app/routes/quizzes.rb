@@ -18,6 +18,8 @@ class Flippd < Sinatra::Application
     if @user.has_permission? :take_assessment then
       @user.quiz_results << @result
       @user.save
+
+      @event_bus.notify(:complete_quiz, @user, { 'result' => @result })
     end
 
     erb :quiz_results
