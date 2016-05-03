@@ -5,9 +5,12 @@ class EventBus
     @event_map = {}
   end
 
-  def attach(event_type, listener)
-    @event_map[event_type] ||= []
-    @event_map[event_type] << listener
+  def attach(listener, event_types)
+    event_types_list = event_types.respond_to?('each') ? event_types : [event_types]
+    event_types_list.each do |event_type|
+      @event_map[event_type] ||= []
+      @event_map[event_type] << listener
+    end
   end
 
   def notify(event_type, user, details={})

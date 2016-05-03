@@ -4,6 +4,6 @@ require_relative '../helpers/event_listeners/karma_listener'
 class Flippd < Sinatra::Application
   before do
     @event_bus ||= EventBus.new
-    KarmaListener.new(@event_bus)
+    @event_bus.attach(KarmaListener.new, [:add_comment, :complete_quiz])
   end
 end

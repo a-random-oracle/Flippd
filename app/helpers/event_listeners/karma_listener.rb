@@ -3,11 +3,6 @@ require_relative '../karma_strategies/karma_strategies'
 Dir[File.join(File.dirname(__FILE__), '..', 'karma_strategies', '**', '*.rb')].each { |file| require file }
 
 class KarmaListener
-  def initialize(event_bus)
-    event_bus.attach(:add_comment, self)
-    event_bus.attach(:complete_quiz, self)
-  end
-
   def notify(event)
     karma_strategy = KarmaListener::find_karma_strategy(event)
     karma_strategy.award_karma(event) if karma_strategy
