@@ -7,6 +7,7 @@ class User
   property :name, String, required: true, length: 150
   property :email, String, required: true, length: 150
   property :permissions, Json, required: false, default: [], lazy: false
+  property :karma, Integer, required: false, default: 0
 
   has n, :quiz_results
 
@@ -24,6 +25,10 @@ class User
     user.update_specific_attributes({ :name => name, :permissions => permissions })
 
     user
+  end
+
+  def award_karma(karma_value)
+    update_specific_attributes({ :karma => attribute_get(:karma) + karma_value })
   end
 
   def update_specific_attributes(attributes)
