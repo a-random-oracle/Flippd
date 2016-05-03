@@ -1,4 +1,5 @@
 require_relative '../event'
+require_relative '../karma_strategies/karma_strategies'
 Dir[File.join(File.dirname(__FILE__), '..', 'karma_strategies', '**', '*.rb')].each { |file| require file }
 
 class KarmaListener
