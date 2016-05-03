@@ -1,5 +1,5 @@
 require_relative '../helpers/event_bus'
-require_relative '../event_listeners/karma_listener'
+require_relative '../helpers/event_listeners/karma_listener'
 
 class Flippd < Sinatra::Application
   before do

@@ -1,5 +1,5 @@
-require_relative '../helpers/event'
-Dir[File.join(File.dirname(__FILE__), '..', 'helpers', 'karma_strategies', '**', '*.rb')].each { |file| require file }
+require_relative '../event'
+Dir[File.join(File.dirname(__FILE__), '..', 'karma_strategies', '**', '*.rb')].each { |file| require file }
 
 class KarmaListener
   def initialize(event_bus)
