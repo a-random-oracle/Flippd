@@ -1,26 +1,21 @@
 require_relative '../helpers/event'
+Dir[File.join(File.dirname(__FILE__), '..', 'helpers', 'karma_strategies', '**', '*.rb')].each { |file| require file }
 
 class KarmaListener
   def initialize(event_bus)
     event_bus.attach(:add_comment, self)
     event_bus.attach(:complete_quiz, self)
-
-    @karma_values = JSON.load(open(ENV['CONFIG_URL'] + "karma.json"))
-    @karma_awarders = { :add_comment   => lambda { |event| get_event_value(event) },
-                        :complete_quiz => lambda { |event| (event.details['result'].percentage * get_event_value(event)) / 100 } }
   end
 
   def notify(event)
-    event.user.award_karma(@karma_awarders[event.type].call(event))
+    karma_strategy = KarmaListener::find_karma_strategy(event)
+    karma_strategy.award_karma(event) if karma_strategy
   end
-
-  private
-
-  def get_event_value(event)
-    @karma_values[json_id_from_event_type(event.type)] || 0
-  end
-
-  def json_id_from_event_type(event_type)
-    event_type.to_s.gsub('_', '-')
+  
+  def self.find_karma_strategy(event)
+    karma_strategy = KarmaStrategies.constants.find do |strategy|
+      KarmaStrategies.const_get(strategy)::STRATEGY_FOR == event.type
+    end
+    KarmaStrategies.const_get(karma_strategy)
   end
 end
