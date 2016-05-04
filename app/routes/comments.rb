@@ -15,6 +15,8 @@ class Flippd < Sinatra::Application
                            :author => @user.id,
                            :text => sanitised_text })
         end
+
+        @event_bus.notify(:add_comment, @user)
       end
     end
 
