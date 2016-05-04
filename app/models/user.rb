@@ -33,6 +33,7 @@ class User
 
   def award_karma(karma_value)
     update_specific_attributes({ :karma => attribute_get(:karma) + karma_value })
+    save
   end
 
   def update_specific_attributes(attributes)
